@@ -1,0 +1,7 @@
+/certbot/
+.env
+.env.prod
+/audio_recordings/
+*.log
+temp/
+.vscode/

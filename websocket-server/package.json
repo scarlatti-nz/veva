@@ -1,0 +1,29 @@
+{
+    "name": "websocket-server",
+    "version": "1.0.0",
+    "main": "server.js",
+    "type": "module",
+    "dependencies": {
+        "@aws-sdk/client-s3": "^3.758.0",
+        "@openai/realtime-api-beta": "github:sam-cormack/openai-realtime-api-beta",
+        "@sentry/node": "^9.5.0",
+        "dotenv": "^16.4.5",
+        "jsonwebtoken": "^9.0.2",
+        "jszip": "^3.10.1",
+        "jwks-rsa": "^3.1.0",
+        "mammoth": "^1.6.0",
+        "openai": "^4.76.1",
+        "pdf-parse": "^1.1.1",
+        "pdfjs-dist": "^4.0.379",
+        "postgres": "^3.4.5",
+        "uuid": "^11.1.0",
+        "vtt-to-json": "^0.1.1",
+        "weaviate-client": "^3.4.0",
+        "ws": "^8.18.0",
+        "xmldom": "^0.6.0",
+        "zod": "^3.24.1"
+    },
+    "scripts": {
+        "start": "node server.js"
+    }
+}

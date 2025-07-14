@@ -1,0 +1,42 @@
+[data-component='AlertContainer'] {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 450px;
+  
+  // When multiple alerts are present, stack them with a slight offset
+  [data-component='Alert'] {
+    position: relative;
+    top: unset;
+    right: unset;
+    margin-bottom: 8px;
+    
+    // Ensure proper stacking of alerts
+    &:nth-child(1) { z-index: 1010; }
+    &:nth-child(2) { z-index: 1009; }
+    &:nth-child(3) { z-index: 1008; }
+    &:nth-child(4) { z-index: 1007; }
+    &:nth-child(5) { z-index: 1006; }
+    
+    // Animation for removing alerts
+    &.alert-exiting {
+      animation: slide-out 0.3s ease-in forwards;
+    }
+  }
+}
+
+// Animation for alert removal
+@keyframes slide-out {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+} 

@@ -1,0 +1,1 @@
+Replace this file with Contract Milking 101 course materials

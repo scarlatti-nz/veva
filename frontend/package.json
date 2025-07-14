@@ -1,0 +1,47 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "start": "vite preview --port 3000",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@azure/msal-browser": "^3.25.0",
+    "@azure/msal-react": "^2.1.1",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
+    "@openai/realtime-api-beta": "github:openai/openai-realtime-api-beta",
+    "@sentry/react": "^9.5.0",
+    "@sentry/vite-plugin": "^3.2.2",
+    "@types/react-router-dom": "^5.3.3",
+    "file-saver": "^2.0.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-feather": "^2.0.10",
+    "react-router-dom": "^7.5.1",
+    "remark-docx": "^0.1.6",
+    "remark-parse": "^11.0.0",
+    "sass": "^1.79.4",
+    "ua-parser-js": "^2.0.3",
+    "unified": "^11.0.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.11.1",
+    "@types/file-saver": "^2.0.7",
+    "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "eslint": "^9.11.1",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.12",
+    "globals": "^15.9.0",
+    "sass-embedded": "^1.79.4",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.7.0",
+    "vite": "^5.4.8"
+  }
+}

@@ -1,0 +1,105 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - websocket-server
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    expose:
+      - "3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_PORT=0
+      - VITE_LOCAL_RELAY_SERVER_URL=/relay
+      - VITE_ENTRA_APP_REDIRECT_URI=http://localhost:8000
+    command: npm run dev
+
+  websocket-server:
+    build:
+      context: ./websocket-server
+      dockerfile: Dockerfile
+    restart: always
+    expose:
+      - "8080"
+    volumes:
+      - ./websocket-server:/app
+      - /app/node_modules
+      - ./audio_recordings:/app/audio_recordings
+      - ./data/fruition-23359:/app/data/fruition-23359:ro
+      - ./data/cm101:/app/data/cm101:ro
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LOG_LEVEL=${LOG_LEVEL:-3}
+      - DO_SPACES_ENDPOINT=${DO_SPACES_ENDPOINT}
+      - DO_SPACES_REGION=${DO_SPACES_REGION}
+      - DO_SPACES_ACCESS_KEY=${DO_SPACES_ACCESS_KEY}
+      - DO_SPACES_SECRET_KEY=${DO_SPACES_SECRET_KEY}
+      - DO_SPACES_BUCKET=${DO_SPACES_BUCKET}
+      - POSTGRES_HOST=${POSTGRES_HOST:-postgres}
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_DB=${POSTGRES_DB:-vevadb}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgrespassword}
+    depends_on:
+      - weaviate
+      - postgres
+
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-vevadb}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgrespassword}
+
+  weaviate:
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8087"
+      - --scheme
+      - http
+    image: cr.weaviate.io/semitechnologies/weaviate:1.29.0
+    ports:
+      - 8087:8087
+      - 50051:50051
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+    restart: on-failure:0
+    environment:
+      OPENAI_APIKEY: $OPENAI_API_KEY
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      DEFAULT_VECTORIZER_MODULE: "text2vec-openai"
+      ENABLE_MODULES: "text2vec-openai"
+      CLUSTER_HOSTNAME: "node1"
+      RAFT_ENABLE_ONE_NODE_RECOVERY: "true"
+
+networks:
+  default:
+    name: veva-app-network
+
+volumes:
+  weaviate_data:
+    driver: local
+  audio_recordings:
+    driver: local
+  postgres_data:
+    driver: local
