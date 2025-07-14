@@ -126,7 +126,6 @@ Location: `websocket-server/`
 ### Weaviate
 
 - Acts as a **vector database** for semantic search / retrieval-augmented generation.
-- Schema defined at runtime by `weaviate-schema.js` – classes include `Material`, `AssessmentContext`, etc.
 - Accessible on `http://localhost:8087` (REST) and `grpc://localhost:50051`.
 
 ---
