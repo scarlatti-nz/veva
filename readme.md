@@ -64,7 +64,8 @@ Key files:
 Prerequisites: Docker 20.10+ and Docker Compose v2 or later.
 
 1. Create a `.env` file in the project root and supply at least your `OPENAI_API_KEY`. The compose file exposes additional optional variables (e.g. DigitalOcean Spaces credentials, Postgres connection settings, `LOG_LEVEL`). Defaults are suitable for local development.
-2. Build and start all services:
+2. Place course material files in `data/cm101` and `data/fruition-23359`. These will be uploaded to the Weaviate database when the relay server is started.
+3. Build and start all services:
 
    ```bash
    docker compose up --build
@@ -72,7 +73,7 @@ Prerequisites: Docker 20.10+ and Docker Compose v2 or later.
 
    The first run will download and build all images; subsequent runs will be much faster.
 
-3. Once all containers report healthy, open your browser at **http://localhost:8000**.
+4. Once all containers report healthy, open your browser at **http://localhost:8000**.
 
 Exposed ports
 
@@ -84,10 +85,6 @@ Exposed ports
 | Weaviate gRPC    | 50051     | Vector DB gRPC endpoint   |
 
 Hot-reloading is enabled for the `frontend` service via bind mounts, so any code changes will be reflected immediately.
-
-## Course material upload
-
-Place course material files in `data/cm101` and `data/fruition-23359`. These will be uploaded to the Weaviate database when the relay server is started.
 
 ## Usage
 
