@@ -2,6 +2,8 @@
 
 This project is a realtime voice chat application built with React, TypeScript, and Vite on the frontend, and a Node.js WebSocket server on the backend. It leverages OpenAI's Realtime API for voice processing and conversation management.
 
+This readme covers how to get the project running. For a more detailed description of the code structure, see `docs/architecture.md`.
+
 ## Features
 
 - Realtime voice oral assessment
