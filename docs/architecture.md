@@ -38,7 +38,7 @@ graph TD
 1. **User** opens `http://localhost:8000` and the SPA is served by NGINX.
 2. Browser initiates a WebSocket connection to `/relay/<assessment-type>` (e.g. `/relay/fruition`).
 3. **WebSocket Relay** (`websocket-server`) spins up an `@openai/realtime-api-beta` client, injects assessment-specific tools/prompts, and streams audio & text between OpenAI and the browser.
-4. Relay stores conversation transcripts in **PostgreSQL** and vector representations in **Weaviate**; large uploaded audio files are optionally persisted to **DigitalOcean Spaces**.
+4. Relay stores conversation transcripts and assessment results in **PostgreSQL** and vector representations of course materials in **Weaviate**; large uploaded audio files are optionally persisted to **DigitalOcean Spaces**.
 5. NGINX routes `/relay/*` WebSocket traffic to port `8080`, and serves the built frontend from `/dist`.
 
 ---
@@ -53,7 +53,7 @@ graph TD
 | **postgres**         | _(image)_           | Stores transcripts & assessments                       | 5432                                   |
 | **weaviate**         | _(image)_           | Vector search / semantic similarity                    | 8087 REST, 50051 gRPC                  |
 
-All services share the user-defined Docker network `voice-chat-pa-app-network`.
+All services share the user-defined Docker network `veva-app-network`.
 
 ---
 
